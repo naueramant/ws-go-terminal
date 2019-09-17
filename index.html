@@ -1,0 +1,84 @@
+<html>
+
+<head>
+    <title>ws terminal</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/fullscreen/fullscreen.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/xterm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/fit/fit.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/attach/attach.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.14.5/addons/fullscreen/fullscreen.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #eee;
+        }
+
+        #terminal {
+            box-shadow: #666 0px 0px 5px 0px;
+            background-color: #181818;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="terminal"></div>
+
+    <script>
+        Terminal.applyAddon(attach);
+        Terminal.applyAddon(fit);
+
+        // The terminal
+        const xterm = new Terminal({
+            rows: 23,
+            cols: 78,
+            fontSize: 16,
+            theme: {
+                foreground: '#ffffff',
+                background: '#181818',
+                cursor: '#666',
+                selection: 'rgba(255, 255, 255, 0.3)',
+                black: '#000000',
+                red: '#e06c75',
+                brightRed: '#e06c75',
+                green: '#A4EFA1',
+                brightGreen: '#A4EFA1',
+                brightYellow: '#EDDC96',
+                yellow: '#EDDC96',
+                magenta: '#e39ef7',
+                brightMagenta: '#e39ef7',
+                cyan: '#5fcbd8',
+                brightBlue: '#5fcbd8',
+                brightCyan: '#5fcbd8',
+                blue: '#5fcbd8',
+                white: '#d0d0d0',
+                brightBlack: '#808080',
+                brightWhite: '#ffffff'
+            }
+        });
+
+        const container = document.getElementById('terminal');
+        xterm.open(container);
+
+        xterm.fit();
+
+        xterm.focus();
+
+        const socket = new WebSocket('ws://localhost:8000/shell');
+
+        socket.onopen = (ev) => {
+            xterm.attach(socket);
+        };
+    </script>
+</body>
+
+</html>
