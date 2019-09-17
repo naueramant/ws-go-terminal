@@ -2,6 +2,10 @@
 
 A demonstration of how to use WebSockets, xtermjs and a go server to forward a terminal to a webpage.
 
+<div align="center">
+    <img src="screenshot.png" width="800px"> 
+</div>
+
 ## Running it
 
 ```bash
