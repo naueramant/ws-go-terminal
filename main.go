@@ -24,9 +24,6 @@ func TTYServer(ws *websocket.Conn) {
 		io.Copy(ws, tty)
 	}()
 	go func() {
-		io.Copy(ws, tty)
-	}()
-	go func() {
 		io.Copy(tty, ws)
 	}()
 
